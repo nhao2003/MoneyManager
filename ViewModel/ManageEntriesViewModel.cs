@@ -1,6 +1,18 @@
-﻿namespace MoneyManager.ViewModel;
+﻿using MoneyManager.Services.Category;
+using MoneyManager.Services.Entry;
 
-public class ManageEntriesViewModel
+namespace MoneyManager.ViewModel;
+
+public class ManageEntriesViewModel : BaseViewModel
 {
+    IEntryService _entryService;
+    ICategoryService _categoryService;
     
+    public ManageEntriesViewModel(IEntryService entryService, ICategoryService categoryService)
+    {
+        _entryService = entryService;
+        _categoryService = categoryService;
+    }
+    
+ 
 }

@@ -1,9 +1,86 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:MoneyManager.ViewModel"
+             xmlns:entities="clr-namespace:MoneyManager.Data.Entities"
+             x:DataType="viewModel:AddEntryViewModel"
              x:Class="MoneyManager.View.AddEntryPage">
-    <ContentPage.Content>
-        
-    </ContentPage.Content>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Chỉnh sửa" />
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="30">
+            <!-- Transaction Type -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Text="Loại giao dịch:" Grid.Column="0" />
+                <StackLayout Orientation="Horizontal" Grid.Column="1">
+                    <RadioButton x:Name="IncomeRadioButton"
+                                 Content="Thu"
+                                 IsChecked="{Binding IsIncome, Mode=TwoWay}"
+                                 GroupName="TransactionType" />
+                    <RadioButton x:Name="ExpenseRadioButton"
+                                 Content="Chi"
+                                 IsChecked="{Binding IsIncome, Mode=TwoWay, Converter={StaticResource InverseBooleanConverter}}"
+                                 GroupName="TransactionType"
+                                 Margin="20,0,0,0" />
+                </StackLayout>
+            </Grid>
+
+            <!-- Date -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Text="Ngày:" Grid.Column="0" />
+                <DatePicker x:Name="EntryDatePicker"
+                            Format="D"
+                            Grid.Column="1" />
+            </Grid>
+
+            <!-- Notes -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Text="Ghi chú:" Grid.Column="0" />
+                <Entry x:Name="NotesEntry"
+                       Text="{Binding Description, Mode=TwoWay}"
+                       Placeholder="Nhập ghi chú"
+                       Grid.Column="1" />
+            </Grid>
+
+            <!-- Amount -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Text="Số tiền:" Grid.Column="0" />
+                <Entry x:Name="AmountEntry"
+                       Keyboard="Numeric"
+                       Placeholder="Nhập số tiền"
+                       Grid.Column="1"
+                       Text="{Binding Amount, Mode=TwoWay}" />
+            </Grid>
+            <CollectionView ItemsSource="{Binding Categories}" SelectionMode="Single"
+                            SelectedItem="{Binding SelectedCategory, Mode=TwoWay}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="entities:Category">
+                        <Button Margin="5" Text="{Binding Name}"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:AddEntryViewModel}}, Path=SelectCategoryCommand}"
+                                CommandParameter="{Binding}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Text="Lưu" Command="{Binding SaveEntryCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

@@ -1,6 +1,13 @@
-﻿namespace MoneyManager.ViewModel;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using CommunityToolkit.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 
-public class BaseViewModel
+namespace MoneyManager.ViewModel;
+
+public class BaseViewModel : ObservableObject
 {
     
+    
+   
 }

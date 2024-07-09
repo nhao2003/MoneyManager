@@ -1,15 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <Shell
     x:Class="MoneyManager.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MoneyManager"
+    xmlns:view="clr-namespace:MoneyManager.View"
     Shell.FlyoutBehavior="Disabled"
     Title="MoneyManager">
-
+    <TabBar>
+        <ShellContent Title="Quản lý thu chi" ContentTemplate="{DataTemplate view:ManageEntriesPage}" />
+        <ShellContent Title="Nhập khoản thu/chi" ContentTemplate="{DataTemplate view:AddEntryPage}" />
+        <ShellContent Title="Thống kê" ContentTemplate="{DataTemplate view:StatisticsPage}" />
+        <ShellContent Title="Danh mục" ContentTemplate="{DataTemplate view:CategoryPage}" />
+    </TabBar>
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+        Title="Thêm danh mục" 
+        Route="AddCategoryPage"
+        ContentTemplate="{DataTemplate view:AddCategoryPage}" />
 </Shell>

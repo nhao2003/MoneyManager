@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MoneyManager.View;
 
-public partial class MoneyPage : ContentPage
+public partial class ManageEntriesPage : ContentPage
 {
-    public MoneyPage()
+    public ManageEntriesPage()
     {
         InitializeComponent();
     }

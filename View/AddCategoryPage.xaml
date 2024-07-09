@@ -2,8 +2,48 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MoneyManager.View.AddCategoryPage">
+             xmlns:viewmodel="clr-namespace:MoneyManager.ViewModel"
+             x:DataType="viewmodel:AddCategoryViewModel"
+             x:Class="MoneyManager.View.AddCategoryPage"
+             Title="Add Category">
     <ContentPage.Content>
-        
+        <StackLayout Padding="10">
+            <Label Text="Loại giao dịch:" Grid.Column="0" />
+            <StackLayout Orientation="Horizontal" Grid.Column="1">
+                <RadioButton x:Name="IncomeRadioButton"
+                             Content="Thu"
+                             IsChecked="{Binding IsIncome}"
+                             GroupName="TransactionType" />
+                <RadioButton x:Name="ExpenseRadioButton"
+                             Content="Chi"
+                             GroupName="TransactionType"
+                             Margin="20,0,0,0" />
+            </StackLayout>
+            <Entry Placeholder="Name"
+                   Text="{Binding Name}"
+                   Margin="10" />
+
+            <Label Text="Select Icon"
+                   FontSize="Medium"
+                   HorizontalOptions="Center"
+                   Margin="10" />
+
+            <CollectionView ItemsSource="{Binding Icons}" SelectionMode="Single"
+                            SelectedItem="{Binding SelectedIcon}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Button Margin="5" Text="{Binding}"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AddCategoryViewModel}}, Path=SelectIconCommand}"
+                                CommandParameter="{Binding}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Text="Save"
+                    Command="{Binding SaveCategoryCommand}"
+                    Margin="10" />
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
