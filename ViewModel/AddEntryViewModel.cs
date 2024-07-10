@@ -23,7 +23,9 @@ public partial class AddEntryViewModel : BaseViewModel
     public async Task LoadCategories()
     {
         Categories.Clear();
-        foreach (var category in await _categoryService.GetCategoriesAsync())
+        var categories = await _categoryService.GetCategoriesAsync();
+        categories = _isIncome ? categories.Where(c => c.IsIncome).ToList() : categories.Where(c => !c.IsIncome).ToList();
+        foreach (var category in categories)
         {
             Categories.Add(category);
         }
@@ -100,7 +102,11 @@ public partial class AddEntryViewModel : BaseViewModel
     public bool IsIncome
     {
         get => _isIncome;
-        set => SetProperty(ref _isIncome, value);
+        set
+        {
+            SetProperty(ref _isIncome, value);
+            _ = LoadCategories();
+        }
     }
     
     [RelayCommand]

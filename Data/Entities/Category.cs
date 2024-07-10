@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace MoneyManager.Data.Entities;
 
@@ -15,4 +14,11 @@ public class Category
     public string Name { get; set; }
     
     public bool IsIncome { get; set; }
+    
+    public ICollection<Entry> Entries { get; set; }
+    
+    public override string ToString()
+    {
+        return $"{nameof(Id)}: {Id}, {nameof(Icon)}: {Icon}, {nameof(Name)}: {Name}, {nameof(IsIncome)}: {IsIncome}, {nameof(Entries)}: {Entries}";
+    }
 }

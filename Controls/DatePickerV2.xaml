@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Grid xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      x:Name="this"
+      Margin="0,10"
+      RowDefinitions="60"
+      x:Class="MoneyManager.Controls.DatePickerV2">
+    <Grid.Resources>
+        <Color x:Key="PlaceHolderColor">#BDBDBD</Color>
+    </Grid.Resources>
+    <Frame
+        Grid.Row="0"
+        Padding="8"
+        BackgroundColor="#F6F6F6"
+        BorderColor="#E8E8E8">
+        <DatePicker Format="{Binding Source={x:Reference this}, Path=Format}"
+                    Date="{Binding Source={x:Reference this}, Path=Date}"
+                    />
+    </Frame>
+    <Label
+        x:Name="LblPlaceholder"
+        Grid.Row="0"
+        Margin="10,18"
+        FontSize="11"
+        TranslationY="-26"
+        Text="{Binding Source={x:Reference this}, Path=Placeholder}"
+        TextColor="{StaticResource PlaceHolderColor}" />
+</Grid>

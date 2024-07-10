@@ -1,16 +1,25 @@
-﻿namespace MoneyManager.Data.Local.Entry;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace MoneyManager.Data.Local.Entry;
+
+public enum FilterType
+{
+    All,
+    Income,
+    Expense
+}
 
 public class EntryLocalDataSource(Database database) : IEntryLocalDataSource
 {
     public Task<Entities.Entry?> GetEntry(int id)
     {
-        var entry = database.Entries.Find(id);
+        var entry = database.Entries.Include(e => e.Category).FirstOrDefault(e => e.Id == id);
         return Task.FromResult(entry);
     }
     
     public Task<Entities.Entry[]> GetEntries()
     {
-        var entries = database.Entries.ToArray();
+        var entries = database.Entries.Include(e => e.Category).OrderByDescending(e => e.Date).ToArray();
         return Task.FromResult(entries);
     }
 

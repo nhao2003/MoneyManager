@@ -20,11 +20,13 @@
                         <StackLayout Orientation="Horizontal"
                                      HorizontalOptions="Fill"
                                      Padding="10">
-                            <Label 
+                            <Label
+                                VerticalOptions="Center"
                                 Text="{Binding Icon}"
                                    FontSize="Large" />
                             <StackLayout Orientation="Vertical" Margin="5, 5, 5, 5">
                                 <Label Text="{Binding Name}"
+                                       FontAttributes="Bold"
                                        VerticalOptions="Center" />
                                 <Label Text="{Binding IsIncome, Converter={StaticResource BoolToTextConverter}}"
                                        VerticalOptions="Center" />

@@ -12,7 +12,6 @@ public partial class AddCategoryViewModel(ICategoryService categoryService) : Ba
     {
         Name = string.Empty;
         SelectedIcon = string.Empty;
-        IsIncome = false;
     }
     
     private string _name = string.Empty;

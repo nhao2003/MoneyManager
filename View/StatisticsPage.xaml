@@ -2,8 +2,53 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:MoneyManager.ViewModel"
+             xmlns:charts="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             xmlns:entities="clr-namespace:MoneyManager.Data.Entities"
+             xmlns:dtOs="clr-namespace:MoneyManager.DTOs"
+             x:DataType="viewModel:StatisticsViewModel"
              x:Class="MoneyManager.View.StatisticsPage">
     <ContentPage.Content>
-        <Label Text="Thống kê"></Label>
+        <StackLayout HorizontalOptions="Center">
+            <StackLayout Orientation="Horizontal">
+                <DatePicker Date="{Binding SelectedDate}" Format="MM/yyyy"></DatePicker>
+                <Stepper Minimum="-1" Maximum="1" Increment="1" Value="{Binding StepValue}" />
+            </StackLayout>
+            <charts:SfCircularChart>
+                <charts:SfCircularChart.Series>
+                    <charts:PieSeries ItemsSource="{Binding Data}"
+                                      XBindingPath="Country"
+                                      YBindingPath="Counts"
+                                      ShowDataLabels="True">
+                    </charts:PieSeries>
+                </charts:SfCircularChart.Series>
+                <charts:SfCircularChart.Legend>
+                    <charts:ChartLegend />
+                </charts:SfCircularChart.Legend>
+            </charts:SfCircularChart>
+            <CollectionView IsGrouped="True" ItemsSource="{Binding GroupedEntries}">
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate x:DataType="dtOs:EntryGroup">
+                        <StackLayout BackgroundColor="LightGray">
+                            <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" Padding="5"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="entities:Entry">
+                        <StackLayout Padding="10">
+                            <Label Text="{Binding Description}" FontAttributes="Bold"/>
+                            <Label Text="{Binding Amount, StringFormat='Amount: {0:C}'}"/>
+                            <Label Text="{Binding Date, StringFormat='Date: {0:dd/MM/yyyy}'}"/>
+                            <Label Text="{Binding IsIncome, StringFormat='Income: {0}'}"/>
+                            <Label Text="{Binding Category.Name, StringFormat='Category: {0}'}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="No entries found" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

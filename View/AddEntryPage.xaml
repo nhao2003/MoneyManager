@@ -1,22 +1,24 @@
-﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:MoneyManager.ViewModel"
              xmlns:entities="clr-namespace:MoneyManager.Data.Entities"
+             xmlns:controls="clr-namespace:MoneyManager.Controls"
              x:DataType="viewModel:AddEntryViewModel"
              x:Class="MoneyManager.View.AddEntryPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Chỉnh sửa" />
+        <!-- <ToolbarItem Text="Chỉnh sửa" /> -->
     </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout Spacing="20" Padding="30">
-            <!-- Transaction Type -->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label Text="Loại giao dịch:" Grid.Column="0" />
-                <StackLayout Orientation="Horizontal" Grid.Column="1">
+                <Label Text="Loại giao dịch:" Grid.Column="0" VerticalOptions="Center" />
+                <StackLayout Orientation="Horizontal" Grid.Column="1" Spacing="20">
                     <RadioButton x:Name="IncomeRadioButton"
                                  Content="Thu"
                                  IsChecked="{Binding IsIncome, Mode=TwoWay}"
@@ -24,49 +26,22 @@
                     <RadioButton x:Name="ExpenseRadioButton"
                                  Content="Chi"
                                  IsChecked="{Binding IsIncome, Mode=TwoWay, Converter={StaticResource InverseBooleanConverter}}"
-                                 GroupName="TransactionType"
-                                 Margin="20,0,0,0" />
+                                 GroupName="TransactionType" />
                 </StackLayout>
             </Grid>
+            <controls:DatePickerV2 x:Name="EntryDatePicker"
+                                   Format="D"
+                                   Date="{Binding Date, Mode=TwoWay}"
+                                   Placeholder="Ngày"/>
 
-            <!-- Date -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Text="Ngày:" Grid.Column="0" />
-                <DatePicker x:Name="EntryDatePicker"
-                            Format="D"
-                            Grid.Column="1" />
-            </Grid>
-
-            <!-- Notes -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Text="Ghi chú:" Grid.Column="0" />
-                <Entry x:Name="NotesEntry"
-                       Text="{Binding Description, Mode=TwoWay}"
-                       Placeholder="Nhập ghi chú"
-                       Grid.Column="1" />
-            </Grid>
-
-            <!-- Amount -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Text="Số tiền:" Grid.Column="0" />
-                <Entry x:Name="AmountEntry"
-                       Keyboard="Numeric"
-                       Placeholder="Nhập số tiền"
-                       Grid.Column="1"
-                       Text="{Binding Amount, Mode=TwoWay}" />
-            </Grid>
+            <controls:Entry x:Name="NotesEntry"
+                            Text="{Binding Description, Mode=TwoWay}"
+                            Placeholder="Nhập ghi chú" />
+            <controls:Entry x:Name="AmountEntry"
+                            Keyboard="Numeric"
+                            Placeholder="Nhập số tiền"
+                            Grid.Column="1"
+                            Text="{Binding Amount, Mode=TwoWay}" />
             <CollectionView ItemsSource="{Binding Categories}" SelectionMode="Single"
                             SelectedItem="{Binding SelectedCategory, Mode=TwoWay}">
                 <CollectionView.ItemsLayout>
@@ -74,9 +49,17 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="entities:Category">
-                        <Button Margin="5" Text="{Binding Name}"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:AddEntryViewModel}}, Path=SelectCategoryCommand}"
-                                CommandParameter="{Binding}" />
+                        <Frame Margin="5" Padding="10" BorderColor="LightGray" CornerRadius="5" HasShadow="True">
+                            <StackLayout Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="{Binding Icon}" HorizontalOptions="Center" />
+                                <Label Text="{Binding Name}" FontAttributes="Bold" HorizontalOptions="Center" />
+                            </StackLayout>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:AddEntryViewModel}}, Path=SelectCategoryCommand}"
+                                    CommandParameter="{Binding}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

@@ -23,11 +23,6 @@
                    Text="{Binding Name}"
                    Margin="10" />
 
-            <Label Text="Select Icon"
-                   FontSize="Medium"
-                   HorizontalOptions="Center"
-                   Margin="10" />
-
             <CollectionView ItemsSource="{Binding Icons}" SelectionMode="Single"
                             SelectedItem="{Binding SelectedIcon}">
                 <CollectionView.ItemsLayout>
@@ -35,9 +30,10 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Button Margin="5" Text="{Binding}"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AddCategoryViewModel}}, Path=SelectIconCommand}"
-                                CommandParameter="{Binding}" />
+                        <Button
+                            Margin="5" Text="{Binding}"
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AddCategoryViewModel}}, Path=SelectIconCommand}"
+                            CommandParameter="{Binding}" />
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

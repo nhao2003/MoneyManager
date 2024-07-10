@@ -9,9 +9,8 @@
     Shell.FlyoutBehavior="Disabled"
     Title="MoneyManager">
     <TabBar>
-        <ShellContent Title="Quản lý thu chi" ContentTemplate="{DataTemplate view:ManageEntriesPage}" />
-        <ShellContent Title="Nhập khoản thu/chi" ContentTemplate="{DataTemplate view:AddEntryPage}" />
-        <ShellContent Title="Thống kê" ContentTemplate="{DataTemplate view:StatisticsPage}" />
+        <ShellContent Title="Báo cáo" ContentTemplate="{DataTemplate view:ManageEntriesPage}" />
+        <ShellContent Title="Nhập" ContentTemplate="{DataTemplate view:AddEntryPage}" />
         <ShellContent Title="Danh mục" ContentTemplate="{DataTemplate view:CategoryPage}" />
     </TabBar>
     <ShellContent
