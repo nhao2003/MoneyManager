@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
+using MoneyManager.Converters;
 using MoneyManager.DTOs;
 using MoneyManager.Enums;
 using MoneyManager.Services.Category;
@@ -10,22 +11,45 @@ namespace MoneyManager.ViewModel;
 
 
 
-public class ManageEntriesViewModel(IEntryService entryService, ICategoryService categoryService)
+public class ManageEntriesViewModel
     : BaseViewModel
 {
-    
-    private FilterType _filterType = FilterType.All;
-    
-    public FilterType FilterType
+    private readonly IEntryService entryService;
+    private readonly ICategoryService categoryService;
+
+    public string[] FilterTypes { get; }
+
+    EnumFilterTypeToStringConverter converter = new();
+
+    public ManageEntriesViewModel(IEntryService entryService, ICategoryService categoryService) 
     {
-        get => _filterType;
+        this.entryService = entryService;
+        this.categoryService = categoryService;
+        FilterTypes =
+        [
+            converter.Convert(FilterType.All, typeof(string), null, null).ToString(),
+            converter.Convert(FilterType.Income, typeof(string), null, null).ToString(),
+            converter.Convert(FilterType.Expense, typeof(string), null, null).ToString()
+        ];
+        FilterTypeString = FilterTypes[0];
+    }
+
+
+    private string _filterTypeString;
+    
+    public string FilterTypeString
+    {
+        get => _filterTypeString;
         set
         {
-            if (_filterType == value) return;
-            SetProperty(ref _filterType, value);
+            if (_filterTypeString == value) return;
+            SetProperty(ref _filterTypeString, value);
+            _filterType = (FilterType)converter.ConvertBack(value, typeof(FilterType), null, null);
             _ = LoadEntries();
         }
     }
+    
+    private FilterType _filterType = FilterType.All;
     
     // First day of the month
     private DateTime _startDate = new(DateTime.Now.Year, DateTime.Now.Month, 1);
@@ -72,7 +96,7 @@ public class ManageEntriesViewModel(IEntryService entryService, ICategoryService
     {
         var entries = await entryService.GetEntriesAsync();
 
-        entries = FilterType switch
+        entries = _filterType switch
         {
             FilterType.Income => entries.Where(e => e.IsIncome),
             FilterType.Expense => entries.Where(e => !e.IsIncome),

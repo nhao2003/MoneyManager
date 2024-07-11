@@ -17,29 +17,18 @@
             
             <!-- Filter Section -->
             <StackLayout Grid.Row="0" Orientation="Horizontal" Spacing="5" Padding="5">
-                <controls:DatePickerV2 
+                <controls:DatePickerV2
+                    Padding="5"
                     Placeholder="Từ"
                     Date="{Binding StartDate}" Format="MM/yyyy" />
                 <controls:DatePickerV2 
                     Placeholder="Đến"
                     Date="{Binding EndDate}" Format="MM/yyyy" />
-                <Label Text="Filter by:" VerticalOptions="Center" HorizontalOptions="Center"/>
-                <Picker SelectedItem="{Binding FilterType}">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type enums:FilterType}">
-                            <enums:FilterType>All</enums:FilterType>
-                            <enums:FilterType>Income</enums:FilterType>
-                            <enums:FilterType>Expense</enums:FilterType>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
+                <Label Text="Loại:" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Picker ItemsSource="{Binding FilterTypes }" SelectedItem="{Binding FilterTypeString}"/>
             </StackLayout>
-            
-            <!-- ScrollView containing Chart and Entries List -->
             <ScrollView Grid.Row="1">
                 <StackLayout Spacing="20" Padding="10">
-                    
-                    <!-- Pie Chart -->
                     <charts:SfCircularChart HeightRequest="250">
                         <charts:SfCircularChart.Series>
                             <charts:PieSeries ItemsSource="{Binding Data}"
@@ -78,7 +67,7 @@
                                         <Label Text="{Binding IsIncome, Converter={StaticResource BoolToTextConverter}}" Grid.Row="3" Grid.Column="1" VerticalOptions="Center"/>
 
                                         <Label Text="Danh mục:" Grid.Row="4" Grid.Column="0" VerticalOptions="Center"/>
-                                        <Label Text="{Binding Category.Name, StringFormat='Category: {0}'}" Grid.Row="4" Grid.Column="1" VerticalOptions="Center"/>
+                                        <Label Text="{Binding Category.Name}" Grid.Row="4" Grid.Column="1" VerticalOptions="Center"/>
                                     </Grid>
                                 </Frame>
                             </DataTemplate>

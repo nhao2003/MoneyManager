@@ -19,14 +19,19 @@ public partial class AddCategoryViewModel(ICategoryService categoryService) : Ba
     public string Name
     {
         get => _name;
-        set => SetProperty(ref _name, value);
+        set
+        {
+            SetProperty(ref _name, value);
+            CheckCanSave();
+        }
     }
 
     public ObservableCollection<string> Icons { get; } =
     [
         "🍔", "🚗", "💰", "🎁", "🏠", "📱", "🎮", "🎬",
         "🎤", "🎨", "📚", "🎳", "🎯", "🎲", "🎰", "🎳",
-        "🎱", "🎭", "🎫", "🎪", "🎧", "🎤", "🎥", "🎦"
+        "🎱", "🎭", "🎫", "🎪", "🎧", "🎤", "🎥", "🎦",
+        "🎨", "🎩", "🎪", "🎬", "🎭", "🎮", 
     ];
     
     private string _selectedIcon = string.Empty;
@@ -34,7 +39,11 @@ public partial class AddCategoryViewModel(ICategoryService categoryService) : Ba
     public string SelectedIcon
     {
         get => _selectedIcon;
-        set => SetProperty(ref _selectedIcon, value);
+        set
+        {
+            SetProperty(ref _selectedIcon, value);
+            CheckCanSave();
+        }
     }
     
     [RelayCommand]
@@ -49,7 +58,11 @@ public partial class AddCategoryViewModel(ICategoryService categoryService) : Ba
     public string Icon
     {
         get => _icon;
-        set => SetProperty(ref _icon, value);
+        set
+        {
+            SetProperty(ref _icon, value);
+            CheckCanSave();
+        }
     }
 
     private bool _isIncome = true;
@@ -77,5 +90,18 @@ public partial class AddCategoryViewModel(ICategoryService categoryService) : Ba
         };
         await categoryService.AddCategoryAsync(category);
         await Shell.Current.Navigation.PopAsync();
+    }
+    
+    private bool _canSave = false;
+    
+    public bool CanSave
+    {
+        get => _canSave;
+        set => SetProperty(ref _canSave, value);
+    }
+    
+    private void CheckCanSave()
+    {
+        CanSave = !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(SelectedIcon);
     }
 }

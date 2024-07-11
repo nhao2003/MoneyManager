@@ -3,9 +3,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:MoneyManager.ViewModel"
+             xmlns:controls="clr-namespace:MoneyManager.Controls"
              x:DataType="viewmodel:AddCategoryViewModel"
              x:Class="MoneyManager.View.AddCategoryPage"
-             Title="Add Category">
+             Title="Thêm danh mục">
     <ContentPage.Content>
         <StackLayout Padding="10">
             <Label Text="Loại giao dịch:" Grid.Column="0" />
@@ -19,9 +20,8 @@
                              GroupName="TransactionType"
                              Margin="20,0,0,0" />
             </StackLayout>
-            <Entry Placeholder="Name"
-                   Text="{Binding Name}"
-                   Margin="10" />
+            <controls:Entry Placeholder="Tên danh mục"
+                            Text="{Binding Name}" />
 
             <CollectionView ItemsSource="{Binding Icons}" SelectionMode="Single"
                             SelectedItem="{Binding SelectedIcon}">
@@ -30,14 +30,19 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Button
-                            Margin="5" Text="{Binding}"
-                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AddCategoryViewModel}}, Path=SelectIconCommand}"
-                            CommandParameter="{Binding}" />
+                        <Frame Margin="5" Padding="10" BorderColor="LightGray" CornerRadius="5" HasShadow="True">
+                            <Label Text="{Binding}" HorizontalOptions="Center" />
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AddCategoryViewModel}}, Path=SelectIconCommand}"
+                                    CommandParameter="{Binding}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
             <Button Text="Save"
+                    IsEnabled="{Binding CanSave}"
                     Command="{Binding SaveCategoryCommand}"
                     Margin="10" />
         </StackLayout>

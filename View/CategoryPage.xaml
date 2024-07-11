@@ -6,7 +6,7 @@
              xmlns:entities="clr-namespace:MoneyManager.Data.Entities"
              x:Class="MoneyManager.View.CategoryPage"
              x:DataType="viewmodel:CategoryViewModel"
-             Title="Categories">
+             Title="Danh mục">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Thêm" Command="{Binding AddCategoryCommand}">

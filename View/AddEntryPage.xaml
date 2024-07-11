@@ -45,7 +45,7 @@
             <CollectionView ItemsSource="{Binding Categories}" SelectionMode="Single"
                             SelectedItem="{Binding SelectedCategory, Mode=TwoWay}">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="5" />
+                    <GridItemsLayout Orientation="Vertical" Span="3" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="entities:Category">
@@ -63,7 +63,9 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Button Text="Lưu" Command="{Binding SaveEntryCommand}" />
+            <Button
+                IsEnabled="{Binding CanSave}"
+                Text="Lưu" Command="{Binding SaveEntryCommand}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

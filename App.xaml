@@ -10,6 +10,7 @@
                 <ResourceDictionary>
                     <converters:BoolToTextConverter x:Key="BoolToTextConverter" />
                     <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+                    <converters:EnumFilterTypeToStringConverter x:Key="EnumFilterTypeToStringConverter" />
                 </ResourceDictionary>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
